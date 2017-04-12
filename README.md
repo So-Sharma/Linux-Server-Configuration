@@ -1,23 +1,23 @@
-###Linux Server Configuration
+### Linux Server Configuration
 
 - This project involved configuring a Ubuntu Linux server instance on Amazon Lightsail and preparing it to host web applications.
 
-####Configuration details
+#### Configuration details
 
-####Secure server
+#### Secure server
 
-######Update all currently installed packages
+###### Update all currently installed packages
     Login to the server and execute the following commands to update packages installed
     - sudo apt-get update
     - sudo apt-get upgrade
 
 ---
-   ######Configure the Lightsail firewall
+   ###### Configure the Lightsail firewall
     Change the Port to 2200 in the sshd_config file using the following commands:
     sudo nano /etc/ssh/sshd_config````
     sudo service ssh restart
 ---
-   ######Configure the Uncomplicated Firewall
+   ###### Configure the Uncomplicated Firewall
     - sudo ufw status (For checking status)
     - sudo ufw default deny incoming
     - sudo ufw default allow outgoing
@@ -27,7 +27,7 @@
     - sudo ufw allow ntp
     - sudo ufw enable
 
-####Add new user - grader
+#### Add new user - grader
 - sudo adduser grader
 - sudo cat /etc/passwd (Confirm addition)
 - nano /etc/sudoers.d/grader
@@ -41,24 +41,24 @@
     chmod 600 .ssh/authorized_keys
     chmod 700 .ssh
 
-####Configure local timezone to UTC
+#### Configure local timezone to UTC
 Verified using the following command:
 sudo dpkg-reconfigure tzdata
 
-####Prepare to deploy your project
+#### Prepare to deploy your project
 
-   ######Install Apache
+   ###### Install Apache
     sudo apt-get install apache2
 
-   ######Install WSGI
+   ###### Install WSGI
     sudo apt-get install libapache2-mod-wsgi
     Follow the directions in the terminal
     sudo a2enmod wsgi
 
-   ######Install git
+   ######  Install git
     sudo apt-get install git
 
-   ######Install Postgresql
+   ######  Install Postgresql
     - sudo apt-get install postgresql
     - To not allow remote connections:
         - sudo cat /etc/postgresql/9.5/main/pg_hba.conf
@@ -77,17 +77,17 @@ sudo dpkg-reconfigure tzdata
         - \l (see list of Dbs)
         - SELECT usename FROM pg_user\g (verify list of users)
 
-   ######Install required python packages
+   ###### Install required python packages
     sudo apt-get install python-sqlalchemy
     sudo apt-get install python-requests
     sudo apt-get install python-oauth2client
     sudo apt-get install python-psycopg2
     sudo apt-get install python-flask
     
-   ######Setup Item Catalog project from the Github repository
+   ###### Setup Item Catalog project from the Github repository
    Clone the Catalog repository into /var/www/catalog/catalog folder
 
-####Deploy the Item Catalog project
+#### Deploy the Item Catalog project
 - Update application.py,database_init.py and database_setup.py to use PostgreSQL instead of SQLite:
  engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 - Update the relative link for client_secret.json to absolute in application.py:
@@ -141,7 +141,7 @@ client_id = json.loads(open('/var/www/catalog/catalog/client_secret.json', 'r').
     - sudo service apache2 restart
 - Access your application from the browser: http://34.207.86.0/catalog
 
-####List of third party resources used
+#### List of third party resources used
 Besides the Udacity course material for Configuring Linux Web Servers, I referred the following resources for the project: 
 - https://help.ubuntu.com/community/UbuntuTime
 - https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
