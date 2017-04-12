@@ -105,7 +105,8 @@ client_id = json.loads(open('/var/www/catalog/catalog/client_secret.json', 'r').
     - cd /var/www/catalog
     - sudo nano catalog.wsgi
     - Add the following content to the file:
-        \#!/usr/bin/python
+    ~~~~
+        #!/usr/bin/python
     
         import sys
         import logging
@@ -113,28 +114,29 @@ client_id = json.loads(open('/var/www/catalog/catalog/client_secret.json', 'r').
         sys.path.insert(0,"/var/www/catalog/")
         
         from catalog import app as application
-    
+    ~~~~
 - Make a WSGI configuration for the Catalog project
     - sudo nano /etc/apache2/sites-available/catalog.conf
     - Add the following contents to the file:
+    ~~~~
         <VirtualHost *:80>
-                        ServerName 34.207.86.0
-                        ServerAdmin your_email@live.com
-                        WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-                        <Directory /var/www/catalog/catalog/>
-                                Order allow,deny
-                                Allow from all
-                        </Directory>
-                        Alias /static /var/www/catalog/catalog/static
-                        <Directory /var/www/catalog/catalog/static/>
-                                Order allow,deny
-                                Allow from all
-                        </Directory>
-                        ErrorLog ${APACHE_LOG_DIR}/error.log
-                        LogLevel warn
-                        CustomLog ${APACHE_LOG_DIR}/access.log combined
+            ServerName 34.207.86.0
+            ServerAdmin your_email@live.com
+            WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+            <Directory /var/www/catalog/catalog/>
+                Order allow,deny
+                Allow from all
+            </Directory>
+            Alias /static /var/www/catalog/catalog/static
+            <Directory /var/www/catalog/catalog/static/>
+                Order allow,deny
+                Allow from all
+            </Directory>
+            ErrorLog ${APACHE_LOG_DIR}/error.log
+            LogLevel warn
+            CustomLog ${APACHE_LOG_DIR}/access.log combined
         </VirtualHost>
-
+	~~~~
 - Enable Catalog configuration:
     - sudo a2ensite catalog
 - Restart web server:
